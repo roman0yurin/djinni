@@ -1,6 +1,11 @@
-cmake_minimum_required(VERSION 3.6.0)
-
-project(djinni_support_lib)
+cmake_minimum_required(VERSION 3.5)
+#Общие настройки
+project(djinni_support_lib C CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_C_STANDARD 11)
 
 include(GNUInstallDirs)
 
@@ -33,11 +38,11 @@ else()
 endif()
 source_group("" FILES ${SRC_SHARED})
 
-set_target_properties(djinni_support_lib PROPERTIES
-  CXX_STANDARD 11
-  CXX_STANDARD_REQUIRED true
-  CXX_EXTENSIONS false
-)
+#set_target_properties(djinni_support_lib PROPERTIES
+#  CXX_STANDARD 11
+#  CXX_STANDARD_REQUIRED true
+#  CXX_EXTENSIONS false
+#)
 
 # Objective-C support
 option(DJINNI_WITH_OBJC "Include the Objective-C support code in Djinni support library." off)
@@ -49,7 +54,7 @@ if(DJINNI_WITH_OBJC)
 endif()
 
 # JNI support
-option(DJINNI_WITH_JNI "Include the JNI support code in Djinni support library." off)
+option(DJINNI_WITH_JNI "Include the JNI support code in Djinni support library." on)
 if(DJINNI_WITH_JNI)
   if(NOT DJINNI_STATIC_LIB)
     list(APPEND SRC_JNI "support-lib/jni/djinni_main.cpp")
