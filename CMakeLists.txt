@@ -30,7 +30,7 @@ set(SRC_OBJC
   "support-lib/objc/DJIProxyCaches.mm"
 )
 
-option(DJINNI_STATIC_LIB "Build Djinni support library as a static library instead of dynamic (the default)." off)
+option(DJINNI_STATIC_LIB "Build Djinni support library as a static library instead of dynamic (the default)." on)
 if(DJINNI_STATIC_LIB)
   add_library(djinni_support_lib STATIC ${SRC_SHARED})
 else()
