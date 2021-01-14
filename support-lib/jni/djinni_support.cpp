@@ -20,6 +20,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 
 static_assert(sizeof(jlong) >= sizeof(void*), "must be able to fit a void* into a jlong");
 
@@ -73,7 +74,13 @@ JNIEnv * jniGetThreadEnv() {
     assert(g_cachedJVM);
     JNIEnv * env = nullptr;
     const jint get_res = g_cachedJVM->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6);
-    if (get_res != 0 || !env) {
+    if (get_res == JNI_EDETACHED) { //TODO Problem is you never detach from the thread. That can leak memory and potentially other resources.
+        std::cerr << "Call Java from pure C++ thread, possible memory leak" << '\n';
+        if (g_cachedJVM->AttachCurrentThread(reinterpret_cast<void**>(&env), NULL) != 0) {
+            // :(
+            std::abort();
+        }
+    } else if (get_res != JNI_OK) {
         // :(
         std::abort();
     }
