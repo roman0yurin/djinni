@@ -237,6 +237,8 @@ class JavaGenerator(spec: Spec) extends Generator(spec) {
 
         // Constructor.
         w.wl
+
+        w.wl(s"public $self() { /* Generated default constructor */ }")
         w.wl(s"public $self(").nestedN(2) {
           val skipFirst = SkipFirst()
           for (f <- r.fields) {
