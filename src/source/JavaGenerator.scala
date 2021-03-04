@@ -232,7 +232,7 @@ class JavaGenerator(spec: Spec) extends Generator(spec) {
         // Field definitions.
         for (f <- r.fields) {
           w.wl
-          w.wl(s"/*package*/ final ${marshal.fieldType(f.ty)} ${idJava.field(f.ident)};")
+          w.wl(s"/*package*/ public ${marshal.fieldType(f.ty)} ${idJava.field(f.ident)};")
         }
 
         // Constructor.
